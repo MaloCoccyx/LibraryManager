@@ -41,20 +41,18 @@
                                 <li><a class="dropdown-item" href="{{ path('book_new') }}">Ajouter</a></li>
                             </ul>
                         </li>
+                        {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+                            <li class="nav-item">
+                                <a class="nav-link {% if activeController is defined and activeController == "register" %}active{% endif %}" href="{{ path('logout') }}">Se déconnecter</a>
+                            </li>
+                        {% else %}
                         <li class="nav-item">
-                            <a class="nav-link {% if activeController is defined and activeController == "login" %}active{% endif %}" href="">Se Connecter</a>
+                            <a class="nav-link {% if activeController is defined and activeController == "login" %}active{% endif %}" href="{{ path('login') }}">Se Connecter</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link {% if activeController is defined and activeController == "register" %}active{% endif %}" href="">S'inscrire</a>
+                            <a class="nav-link {% if activeController is defined and activeController == "register" %}active{% endif %}" href="{{ path('register') }}">S'inscrire</a>
                         </li>
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle {% if activeController is defined and activeController == "register"%}active{% endif %}" href="#" id="dropdown03" data-bs-toggle="dropdown" aria-expanded="false">S'inscrire</a>
-                            <ul class="dropdown-menu" aria-labelledby="dropdown03">
-                                <li><a class="dropdown-item" href="#">Mot de passe oublié</a></li>
-                                <li><a class="dropdown-item" href="#">Another action</a></li>
-                                <li><a class="dropdown-item" href="#">Something else here</a></li>
-                            </ul>
-                        </li>
+                        {% endif %}
                     </ul>
                     <form>
                         <input class="form-control" type="text" placeholder="Search" aria-label="Search">
