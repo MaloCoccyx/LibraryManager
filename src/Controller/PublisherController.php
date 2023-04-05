@@ -51,7 +51,7 @@ class PublisherController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}/edit', name: 'publisher_edit', methods: ['GET', 'POST'])]
+    #[Route('/edit/{id}', name: 'publisher_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Publisher $publisher, PublisherRepository $publisherRepository): Response
     {
         $form = $this->createForm(PublisherType::class, $publisher);
@@ -70,7 +70,7 @@ class PublisherController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', name: 'publisher_delete', methods: ['POST'])]
+    #[Route('/delete/{id}', name: 'publisher_delete', methods: ['POST'])]
     public function delete(Request $request, Publisher $publisher, PublisherRepository $publisherRepository): Response
     {
         if ($this->isCsrfTokenValid('delete'.$publisher->getId(), $request->request->get('_token'))) {

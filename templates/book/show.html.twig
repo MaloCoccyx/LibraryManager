@@ -12,10 +12,12 @@
             <li class="list-group-item">Année: {{ book.year }}</li>
             <li class="list-group-item">ISBN: {{ book.isbn }}</li>
         </ul>
+        {% if is_granted('ROLE_ADMIN') %}
         <div class="card-body">
             <a href="{{ path('book_edit', {'id': book.id}) }}" class="card-link btn btn-primary">Modifier</a>
             {{ include('book/_delete_form.html.twig') }}
         </div>
+        {% endif %}
     </div>
 
 {% endblock %}

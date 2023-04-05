@@ -17,10 +17,12 @@
         <ul class="list-group list-group-flush">
             <li class="list-group-item">{% if author.sexe is same as('M') %}Homme{%  elseif author.sexe is same as ('F') %} Femme {% endif %}</li>
         </ul>
+        {% if is_granted('ROLE_ADMIN') %}
         <div class="card-body">
             <a href="{{ path('author_edit', {'id': author.id}) }}" class="card-link">Modifier</a>
             {{ include('author/_delete_form.html.twig') }}
         </div>
+        {% endif %}
     </div>
 
     <h1>Livres écrit:</h1>
@@ -45,7 +47,9 @@
                 <td>{{ book.description }}</td>
                 <td>
                     <a href="{{ path('book_show', {'id': book.id}) }}" class="btn btn-success">Voir</a>
+                    {% if is_granted('ROLE_ADMIN') %}
                     <a href="{{ path('book_edit', {'id': book.id}) }}" class="btn btn-secondary">Modifier</a>
+                    {% endif %}
                 </td>
             </tr>
         {% else %}

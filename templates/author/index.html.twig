@@ -31,7 +31,9 @@
                 <td>{{ author.image }}</td>
                 <td>
                     <a href="{{ path('author_show', {'id': author.id}) }}" class="btn btn-success">Voir</a>
+                    {% if is_granted('ROLE_ADMIN') %}
                     <a href="{{ path('author_edit', {'id': author.id}) }}" class="btn btn-secondary">Modifier</a>
+                    {% endif %}
                 </td>
             </tr>
         {% else %}
@@ -42,7 +44,9 @@
         </tbody>
     </table>
 
+    {% if is_granted('ROLE_ADMIN') %}
     <a href="{{ path('author_new') }}" class="btn btn-primary">Ajouter un auteur</a>
+    {% endif %}
 {% endblock %}
 {% block javascripts %}
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.3/jquery.min.js" integrity="sha512-STof4xm1wgkfm7heWqFJVn58Hm3EtS31XFaagaa8VMReCXAkQnJZ+jEy8PCC/iT18dFy95WcExNHFTqLyp72eQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>

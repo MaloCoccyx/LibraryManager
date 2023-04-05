@@ -51,7 +51,7 @@ class BookController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}/edit', name: 'book_edit', methods: ['GET', 'POST'])]
+    #[Route('/edit/{id}', name: 'book_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Book $book, BookRepository $bookRepository): Response
     {
         $form = $this->createForm(BookType::class, $book);
@@ -70,7 +70,7 @@ class BookController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', name: 'book_delete', methods: ['POST'])]
+    #[Route('/delete/{id}', name: 'book_delete', methods: ['POST'])]
     public function delete(Request $request, Book $book, BookRepository $bookRepository): Response
     {
         if ($this->isCsrfTokenValid('delete'.$book->getId(), $request->request->get('_token'))) {

@@ -52,7 +52,7 @@ class AuthorController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}/edit', name: 'author_edit', methods: ['GET', 'POST'])]
+    #[Route('/edit/{id}', name: 'author_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Author $author, AuthorRepository $authorRepository): Response
     {
         $form = $this->createForm(AuthorType::class, $author);
@@ -71,7 +71,7 @@ class AuthorController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', name: 'author_delete', methods: ['POST'])]
+    #[Route('/delete/{id}', name: 'author_delete', methods: ['POST'])]
     public function delete(Request $request, Author $author, AuthorRepository $authorRepository): Response
     {
         if ($this->isCsrfTokenValid('delete'.$author->getId(), $request->request->get('_token'))) {
