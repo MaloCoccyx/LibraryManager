@@ -24,21 +24,27 @@
                             <a class="nav-link dropdown-toggle {% if activeController is defined and activeController == "author"%}active{% endif %}" href="#" id="dropdown03" data-bs-toggle="dropdown" aria-expanded="false">Auteurs</a>
                             <ul class="dropdown-menu" aria-labelledby="dropdown03">
                                 <li><a class="dropdown-item" href="{{ path('author_index')}}">Voir</a></li>
+                                {% if is_granted('ROLE_ADMIN') %}
                                 <li><a class="dropdown-item" href="{{ path('author_new')}}">Ajouter</a></li>
+                                {% endif %}
                             </ul>
                         </li>
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle {% if activeController is defined and activeController == "publisher"%}active{% endif %}" href="#" id="dropdown03" data-bs-toggle="dropdown" aria-expanded="false">Éditeurs</a>
                             <ul class="dropdown-menu" aria-labelledby="dropdown03">
                                 <li><a class="dropdown-item" href="{{ path('publisher_index')}}">Voir</a></li>
+                                {% if is_granted('ROLE_ADMIN') %}
                                 <li><a class="dropdown-item" href="{{ path('publisher_new')}}">Ajouter</a></li>
+                                {% endif %}
                             </ul>
                         </li>
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle {% if activeController is defined and activeController == "book"%}active{% endif %}" href="#" id="dropdown03" data-bs-toggle="dropdown" aria-expanded="false">Livres</a>
                             <ul class="dropdown-menu" aria-labelledby="dropdown03">
                                 <li><a class="dropdown-item" href="{{ path('book_index') }}">Voir</a></li>
+                                {% if is_granted('ROLE_ADMIN') %}
                                 <li><a class="dropdown-item" href="{{ path('book_new') }}">Ajouter</a></li>
+                                {% endif %}
                             </ul>
                         </li>
                         {% if is_granted('IS_AUTHENTICATED_FULLY') %}

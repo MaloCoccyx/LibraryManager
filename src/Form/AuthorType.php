@@ -5,10 +5,11 @@ namespace App\Form;
 use App\Entity\Author;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-use Symfony\Component\Form\Extension\Core\Type\RadioType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\Image;
 
 class AuthorType extends AbstractType
 {
@@ -27,8 +28,15 @@ class AuthorType extends AbstractType
                     'Femme' => 'F'
                 ]
             ])
-            ->add('image', TextType::class, [
-                'required' => false
+            ->add('image', FileType::class, [
+                'label' => 'Photo (2mo max)',
+                'mapped' => false,
+                'required' => false,
+                'constraints' => [
+                    new Image([
+                        'maxSize' => '2048k'
+                    ])
+                ]
             ])
         ;
     }

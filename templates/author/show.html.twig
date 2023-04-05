@@ -9,7 +9,7 @@
 
 {% block body %}
     <div class="card" style="width: 18rem;">
-        <img class="card-img-top" src="{% if author.sexe is same as('M') %}https://c7.alamy.com/compfr/2hp6yx7/avatar-homme-visage-silhouette-utilisateur-signe-personne-profil-image-homme-icone-noir-couleur-vecteur-illustration-image-de-style-plat-2hp6yx7.jpg{%  elseif author.sexe is same as ('F') %}https://www.sne.fr/app/uploads/2017/10/profile-femme.jpg{% endif %}" alt="Card image cap">
+        <img class="card-img-top" src="{% if author.image is not null %}/uploads/photos/authors/{{author.lastname}}-{{author.firstname}}/{{ author.image }}{% endif %}" alt="Card image cap">
         <div class="card-body">
             <h5 class="card-title">{{ author.firstname }} {{ author.lastname }}</h5>
             <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
@@ -30,6 +30,7 @@
         <thead>
         <tr>
             <th scope="col">#</th>
+            <th scope="col">Couverture</th>
             <th scope="col">Titre</th>
             <th scope="col">ISBN</th>
             <th scope="col">Année</th>
@@ -41,6 +42,9 @@
         {% for book in author.books %}
             <tr>
                 <td>{{ book.id }}</td>
+                <td>
+                    <img style="max-height: 100px;" src="{% if book.image is not null %}/uploads/photos/authors/{{book.id}}-{{book.title}}/{{ book.image }}{% endif %}" />
+                </td>
                 <td>{{ book.title }}</td>
                 <td>{{ book.isbn }}</td>
                 <td>{{ book.year }}</td>

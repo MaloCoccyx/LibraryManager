@@ -8,10 +8,12 @@ use App\Entity\Publisher;
 use Doctrine\ORM\EntityRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\Image;
 
 class BookType extends AbstractType
 {
@@ -46,6 +48,16 @@ class BookType extends AbstractType
                     return $er->createQueryBuilder('e')->orderBy('e.name', 'ASC');
                 }
                 ])
+            ->add('image', FileType::class, [
+                'label' => 'Couverture (2mo max)',
+                'mapped' => false,
+                'required' => false,
+                'constraints' => [
+                    new Image([
+                        'maxSize' => '2048k'
+                    ])
+                ]
+            ])
         ;
     }
 

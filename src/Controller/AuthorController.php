@@ -24,14 +24,23 @@ class AuthorController extends AbstractController
     }
 
     #[Route('/new', name: 'author_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, AuthorRepository $authorRepository): Response
+    public function new(Request $request, AuthorRepository $authorRepository, #[Autowire('%authors_Photo_Dir%')] string $authorsPhotoDir): Response
     {
         $author = new Author();
         $form = $this->createForm(AuthorType::class, $author);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $authorRepository->save($author, true);
+            if($photo = $form->get('image')->getData()){
+                $filename = bin2hex(random_bytes(6)) . '.' . $photo->guessExtension();
+                try {
+                    $photo->move($authorsPhotoDir . DIRECTORY_SEPARATOR . $author->getLastname() . '-' . $author->getFirstname(), $filename);
+                }catch (FileException $e){
+
+                }
+                $author->setImage($filename);
+                $authorRepository->save($author, true);
+            }
 
             return $this->redirectToRoute('author_index', [], Response::HTTP_SEE_OTHER);
         }
@@ -53,14 +62,22 @@ class AuthorController extends AbstractController
     }
 
     #[Route('/edit/{id}', name: 'author_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, Author $author, AuthorRepository $authorRepository): Response
+    public function edit(Request $request, Author $author, AuthorRepository $authorRepository, #[Autowire('%authors_Photo_Dir%')] string $authorsPhotoDir): Response
     {
         $form = $this->createForm(AuthorType::class, $author);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $authorRepository->save($author, true);
+            if($photo = $form->get('image')->getData()){
+                $filename = bin2hex(random_bytes(6)) . '.' . $photo->guessExtension();
+                try {
+                    $photo->move($authorsPhotoDir . DIRECTORY_SEPARATOR . $author->getLastname() . '-' . $author->getFirstname(), $filename);
+                }catch (FileException $e){
 
+                }
+                $author->setImage($filename);
+                $authorRepository->save($author, true);
+            }
             return $this->redirectToRoute('author_index', [], Response::HTTP_SEE_OTHER);
         }
 

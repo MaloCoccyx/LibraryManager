@@ -4,6 +4,7 @@
 
 {% block body %}
     <div class="card" style="width: 18rem;">
+        <img class="card-img-top" src="{% if book.image is not null %}/uploads/photos/authors/{{book.id}}-{{ book.title }}/{{ book.image }}{% endif %}" alt="Card image cap">
         <div class="card-body">
             <h5 class="card-title">{{ book.title }} par </h5>
             <p class="card-text">{{ book.description }}</p>

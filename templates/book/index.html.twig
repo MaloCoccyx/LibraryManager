@@ -17,6 +17,8 @@
             <th scope="col">Nom</th>
             <th scope="col">Sexe</th>
             <th scope="col">Image</th>
+            <th scope="col">Auteurs</th>
+            <th scope="col">Editeurs</th>
             <th scope="col">Actions</th>
         </tr>
         </thead>
@@ -28,6 +30,8 @@
                 <td>{{ book.isbn }}</td>
                 <td>{{ book.year }}</td>
                 <td>{{ book.description }}</td>
+                <td>{{ book.author_id.firstname }}</td>
+                <td>{{ book.publisher_id.name }}</td>
                 <td>
                     {% if is_granted('ROLE_ADMIN') %}
                     <a href="{{ path('book_show', {'id': book.id}) }}" class="btn btn-success">Voir</a>

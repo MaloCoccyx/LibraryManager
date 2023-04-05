@@ -16,6 +16,7 @@ class BookController extends AbstractController
     #[Route('/', name: 'book_index', methods: ['GET'])]
     public function index(BookRepository $bookRepository): Response
     {
+        dd($bookRepository->findAll());
         return $this->render('book/index.html.twig', [
             'books' => $bookRepository->findAll(),
             'activeController' => 'book',
@@ -23,13 +24,22 @@ class BookController extends AbstractController
     }
 
     #[Route('/new', name: 'book_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, BookRepository $bookRepository): Response
+    public function new(Request $request, BookRepository $bookRepository, #[Autowire('%books_Photo_Dir%')] string $booksPhotoDir): Response
     {
         $book = new Book();
         $form = $this->createForm(BookType::class, $book);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            if($photo = $form->get('image')->getData()){
+                $filename = bin2hex(random_bytes(6)) . '.' . $photo->guessExtension();
+                try {
+                    $photo->move($booksPhotoDir . DIRECTORY_SEPARATOR . $book->getId() .'-' . $book->getTitle(), $filename);
+                }catch (FileException $e){
+
+                }
+                $book->setImage($filename);
+            }
             $bookRepository->save($book, true);
 
             return $this->redirectToRoute('book_index', [], Response::HTTP_SEE_OTHER);
@@ -52,12 +62,21 @@ class BookController extends AbstractController
     }
 
     #[Route('/edit/{id}', name: 'book_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, Book $book, BookRepository $bookRepository): Response
+    public function edit(Request $request, Book $book, BookRepository $bookRepository, #[Autowire('%books_Photo_Dir%')] string $booksPhotoDir): Response
     {
         $form = $this->createForm(BookType::class, $book);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            if($photo = $form->get('image')->getData()){
+                $filename = bin2hex(random_bytes(6)) . '.' . $photo->guessExtension();
+                try {
+                    $photo->move($booksPhotoDir . DIRECTORY_SEPARATOR . $book->getId() .'-' . $book->getTitle(), $filename);
+                }catch (FileException $e){
+
+                }
+                $book->setImage($filename);
+            }
             $bookRepository->save($book, true);
 
             return $this->redirectToRoute('book_index', [], Response::HTTP_SEE_OTHER);

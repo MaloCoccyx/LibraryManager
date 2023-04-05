@@ -33,6 +33,9 @@ class Book
     #[ORM\JoinColumn(nullable: false)]
     private ?Publisher $publisher_id = null;
 
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $image = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -106,6 +109,18 @@ class Book
     public function setPublisherId(?Publisher $publisher_id): self
     {
         $this->publisher_id = $publisher_id;
+
+        return $this;
+    }
+
+    public function getImage(): ?string
+    {
+        return $this->image;
+    }
+
+    public function setImage(?string $image): self
+    {
+        $this->image = $image;
 
         return $this;
     }
