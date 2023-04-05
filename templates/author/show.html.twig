@@ -50,7 +50,7 @@
                 <td>{{ book.isbn }}</td>
                 <td>{{ book.year }}</td>
                 <td>{{ book.description }}</td>
-                <td><a href="{{  path('author_show', {id: book.publisherId.id}) }}" class="link-info">{{ book.publisherId.name }}</a></td>
+                <td><a href="{{  path('publisher_show', {id: book.publisherId.id}) }}" class="link-info">{{ book.publisherId.name }}</a></td>
                 <td>
                     <a href="{{ path('book_show', {'id': book.id}) }}" class="btn btn-success">Voir</a>
                     {% if is_granted('ROLE_ADMIN') %}
