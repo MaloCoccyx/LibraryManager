@@ -9,7 +9,12 @@
 
 {% block body %}
     <div class="card" style="width: 18rem;">
-        <img class="card-img-top" src="{% if author.image is not null %}/uploads/photos/authors/{{author.lastname}}-{{author.firstname}}/{{ author.image }}{% endif %}" alt="Card image cap">
+        <img class="card-img-top" src="{% if author.image is not null %}/uploads/authors/{{author.lastname}}-{{author.firstname}}/{{ author.image }}
+        {% else %}
+            {% if author.sexe is same as('M') %} https://c7.alamy.com/compfr/2hp6yx7/avatar-homme-visage-silhouette-utilisateur-signe-personne-profil-image-homme-icone-noir-couleur-vecteur-illustration-image-de-style-plat-2hp6yx7.jpg
+            {% elseif author.sexe is same as('F') %} https://www.sne.fr/app/uploads/2017/10/profile-femme.jpg
+            {% endif %}
+        {% endif %}" alt="Card image cap">
         <div class="card-body">
             <h5 class="card-title">{{ author.firstname }} {{ author.lastname }}</h5>
             <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
@@ -19,7 +24,7 @@
         </ul>
         {% if is_granted('ROLE_ADMIN') %}
         <div class="card-body">
-            <a href="{{ path('author_edit', {'id': author.id}) }}" class="card-link">Modifier</a>
+            <a href="{{ path('author_edit', {'id': author.id}) }}" class="card-link btn btn-success">Modifier</a>
             {{ include('author/_delete_form.html.twig') }}
         </div>
         {% endif %}
@@ -44,7 +49,7 @@
             <tr>
                 <td>{{ book.id }}</td>
                 <td>
-                    <img style="max-height: 100px;" src="{% if book.image is not null %}/uploads/photos/books/{{book.isbn}}-{{book.title}}/{{ book.image }}{% else %}https://binaries.templates.cdn.office.net/support/templates/fr-fr/lt22301254_quantized.png{% endif %}" />
+                    <img style="max-height: 100px;" src="{% if book.image is not null %}/uploads/books/{{book.isbn}}-{{book.title}}/{{ book.image }}{% else %}https://binaries.templates.cdn.office.net/support/templates/fr-fr/lt22301254_quantized.png{% endif %}" />
                 </td>
                 <td>{{ book.title }}</td>
                 <td>{{ book.isbn }}</td>

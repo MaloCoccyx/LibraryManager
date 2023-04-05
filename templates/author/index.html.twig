@@ -26,7 +26,12 @@
             <tr>
                 <td>{{ author.id }}</td>
                 <td>
-                    <img style="max-height: 100px;" src="{% if author.image is not null %}/uploads/photos/authors/{{author.lastname}}-{{author.firstname}}/{{ author.image }}{% endif %}" />
+                    <img style="max-height: 100px;" src="{% if author.image is not null %}/uploads/authors/{{author.lastname}}-{{author.firstname}}/{{ author.image }}
+        {% else %}
+            {% if author.sexe is same as('M') %} https://c7.alamy.com/compfr/2hp6yx7/avatar-homme-visage-silhouette-utilisateur-signe-personne-profil-image-homme-icone-noir-couleur-vecteur-illustration-image-de-style-plat-2hp6yx7.jpg
+            {% elseif author.sexe is same as('F') %} https://www.sne.fr/app/uploads/2017/10/profile-femme.jpg
+            {% endif %}
+        {% endif %}" />
                 </td>
                 <td>{{ author.firstname }}</td>
                 <td>{{ author.lastname }}</td>

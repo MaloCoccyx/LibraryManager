@@ -21,6 +21,9 @@ class Publisher
     #[ORM\OneToMany(mappedBy: 'publisher_id', targetEntity: Book::class, orphanRemoval: true)]
     private Collection $books;
 
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $image = null;
+
     public function __construct()
     {
         $this->books = new ArrayCollection();
@@ -69,6 +72,18 @@ class Publisher
                 $book->setPublisherId(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getImage(): ?string
+    {
+        return $this->image;
+    }
+
+    public function setImage(?string $image): self
+    {
+        $this->image = $image;
 
         return $this;
     }

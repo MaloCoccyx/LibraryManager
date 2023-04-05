@@ -4,7 +4,7 @@
 
 {% block body %}
     <div class="card" style="width: 18rem;">
-        <img class="card-img-top" src="{% if book.image is not null %}/uploads/photos/authors/{{book.id}}-{{ book.title }}/{{ book.image }}{% else %}https://binaries.templates.cdn.office.net/support/templates/fr-fr/lt22301254_quantized.png{% endif %}" alt="Card image cap">
+        <img class="card-img-top" src="{% if book.image is not null %}/uploads/books/{{book.id}}-{{ book.title }}/{{ book.image }}{% else %}https://binaries.templates.cdn.office.net/support/templates/fr-fr/lt22301254_quantized.png{% endif %}" alt="Card image cap">
         <div class="card-body">
             <h5 class="card-title">{{ book.title }} par {{ book.authorId.firstname }}  {{ book.authorId.lastname }}</h5>
             <p class="card-text">{{ book.description }}</p>
@@ -17,7 +17,7 @@
         </ul>
         {% if is_granted('ROLE_ADMIN') %}
         <div class="card-body">
-            <a href="{{ path('book_edit', {'id': book.id}) }}" class="card-link btn btn-primary">Modifier</a>
+            <a href="{{ path('book_edit', {'id': book.id}) }}" class="card-link btn btn-success">Modifier</a>
             {{ include('book/_delete_form.html.twig') }}
         </div>
         {% endif %}

@@ -51,7 +51,7 @@ class AppFixtures extends Fixture
         for ($b= 0; $b <= 30; $b++){
             $book = new Book();
 
-            $book->setTitle($faker->title())
+            $book->setTitle($faker->sentence(6))
                 ->setYear($faker->year())
                 ->setIsbn($faker->isbn13())
                 ->setDescription($faker->paragraph())

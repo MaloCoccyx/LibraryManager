@@ -28,7 +28,7 @@
             <tr>
                 <td>{{ book.id }}</td>
                 <td>
-                    <img style="max-height: 100px;" src="{% if book.image is not null %}/uploads/photos/books/{{book.isbn}}-{{book.title}}/{{ book.image }}{% else %}https://binaries.templates.cdn.office.net/support/templates/fr-fr/lt22301254_quantized.png{% endif %}" />
+                    <img style="max-height: 100px;" src="{% if book.image is not null %}/uploads/books/{{book.isbn}}-{{book.title}}/{{ book.image }}{% else %}https://binaries.templates.cdn.office.net/support/templates/fr-fr/lt22301254_quantized.png{% endif %}" />
                 </td>
                 <td>{{ book.title }}</td>
                 <td>{{ book.isbn }}</td>

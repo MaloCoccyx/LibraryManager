@@ -23,13 +23,22 @@ class PublisherController extends AbstractController
     }
 
     #[Route('/new', name: 'publisher_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, PublisherRepository $publisherRepository): Response
+    public function new(Request $request, PublisherRepository $publisherRepository, #[Autowire('%publishers_Photo_Dir%')] string $publishersPhotoDir): Response
     {
         $publisher = new Publisher();
         $form = $this->createForm(PublisherType::class, $publisher);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            if($photo = $form->get('image')->getData()){
+                $filename = bin2hex(random_bytes(6)) . '.' . $photo->guessExtension();
+                try {
+                    $photo->move($publishersPhotoDir . DIRECTORY_SEPARATOR . $publisher->getName(), $filename);
+                }catch (FileException $e){
+
+                }
+                $publisher->setImage($filename);
+            }
             $publisherRepository->save($publisher, true);
 
             return $this->redirectToRoute('publisher_index', [], Response::HTTP_SEE_OTHER);
@@ -52,12 +61,21 @@ class PublisherController extends AbstractController
     }
 
     #[Route('/edit/{id}', name: 'publisher_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, Publisher $publisher, PublisherRepository $publisherRepository): Response
+    public function edit(Request $request, Publisher $publisher, PublisherRepository $publisherRepository, #[Autowire('%publishers_Photo_Dir%')] string $publishersPhotoDir): Response
     {
         $form = $this->createForm(PublisherType::class, $publisher);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            if($photo = $form->get('image')->getData()){
+                $filename = bin2hex(random_bytes(6)) . '.' . $photo->guessExtension();
+                try {
+                    $photo->move($publishersPhotoDir . DIRECTORY_SEPARATOR . $publisher->getName(), $filename);
+                }catch (FileException $e){
+
+                }
+                $publisher->setImage($filename);
+            }
             $publisherRepository->save($publisher, true);
 
             return $this->redirectToRoute('publisher_index', [], Response::HTTP_SEE_OTHER);

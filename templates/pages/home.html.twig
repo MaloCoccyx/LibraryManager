@@ -3,6 +3,29 @@
 {% block title %}Page d'accueil{% endblock %}
 
 {% block body %}
-    <h1>Bienvenue!</h1>
+    <h1>Bienvenue! Voici les 5 derniers livres ajoutés à notre base de donnée!</h1>
+    {% for book in books %}
+    <div class="card text-center mt-5">
+        <div class="card-header">
+            {{ book.title }}
+        </div>
+        <div class="card-body">
+            <img style="max-height: 100px;" src="{% if book.image is not null %}/uploads/books/{{book.isbn}}-{{book.title}}/{{ book.image }}{% else %}https://binaries.templates.cdn.office.net/support/templates/fr-fr/lt22301254_quantized.png{% endif %}" />
 
+            <h5 class="card-title"><em>par <a href="{{  path('author_show', {id: book.authorId.id}) }}" class="link-warning">{{ book.authorId.firstname }} {{ book.authorId.lastname }}</a></em></h5>
+            <p class="card-text">{{ book.description }}</p>
+            <a href="{{ path('book_show', {'id': book.id}) }}" class="btn btn-primary">Voir</a>
+            {% if is_granted('ROLE_ADMIN') %}
+                <a href="{{ path('book_edit', {'id': book.id}) }}" class="btn btn-secondary">Modifier</a>
+            {% endif %}
+        </div>
+        <div class="card-footer text-muted">
+            Année: {{ book.year }} - Edité par: <a href="{{  path('publisher_show', {id: book.publisherId.id}) }}" class="link-info">{{ book.publisherId.name }}</a>
+        </div>
+    </div>
+        {% else %}
+            <tr>
+                <td colspan="6">Aucun résultat trouvé!</td>
+            </tr>
+        {% endfor %}
 {% endblock %}

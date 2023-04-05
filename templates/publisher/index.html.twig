@@ -13,6 +13,7 @@
         <thead>
         <tr>
             <th scope="col">#</th>
+            <th scope="col">Logos</th>
             <th scope="col">Nom</th>
             <th scope="col">Actions</th>
         </tr>
@@ -21,6 +22,10 @@
         {% for publisher in publishers %}
             <tr>
                 <td>{{ publisher.id }}</td>
+                <td>
+                    <img style="max-height: 100px;" src="{% if publisher.image is not null %}/uploads/publishers/{{publisher.name}}/{{ publisher.image }}
+                        {% else %}https://media.istockphoto.com/id/1125880278/fr/vectoriel/logotype-de-cercle-abstrait-de-mouvement-cr%C3%A9ation-logo-rond-dynamique-symbole-de-la.jpg?s=1024x1024&w=is&k=20&c=yynugnKsuxeSx5ND02TG0JRmaxR0soTej4LVpdvsbgA={% endif %}" />
+                </td>
                 <td>{{ publisher.name }}</td>
                 <td>
                     <a href="{{ path('publisher_show', {'id': publisher.id}) }}" class="btn btn-success">Voir</a>
