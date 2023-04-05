@@ -22,7 +22,7 @@ class AppFixtures extends Fixture
         $faker = Factory::create('fr_FR');
 
         // Addresses
-        for ($a = 0; $a <= 20; $a++){
+        for ($a = 0; $a <= 10; $a++){
             $author = new Author();
 
             $author->setFirstname($faker->firstName())
@@ -36,10 +36,10 @@ class AppFixtures extends Fixture
 
         $allAuthors = $manager->getRepository(Author::class)->findAll();
         // Publisher
-        for ($p = 0; $p <= 15; $p++){
+        for ($p = 0; $p <= 2; $p++){
             $publisher = new Publisher();
 
-            $publisher->setName($faker->name());
+            $publisher->setName($faker->company());
 
             $manager->persist($publisher);
         }
@@ -48,7 +48,7 @@ class AppFixtures extends Fixture
         $allPublishers = $manager->getRepository(Publisher::class)->findAll();
 
         // Books
-        for ($b= 0; $b <= 15; $b++){
+        for ($b= 0; $b <= 30; $b++){
             $book = new Book();
 
             $book->setTitle($faker->title())

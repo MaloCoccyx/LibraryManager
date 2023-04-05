@@ -4,14 +4,16 @@
 
 {% block body %}
     <div class="card" style="width: 18rem;">
-        <img class="card-img-top" src="{% if book.image is not null %}/uploads/photos/authors/{{book.id}}-{{ book.title }}/{{ book.image }}{% endif %}" alt="Card image cap">
+        <img class="card-img-top" src="{% if book.image is not null %}/uploads/photos/authors/{{book.id}}-{{ book.title }}/{{ book.image }}{% else %}https://binaries.templates.cdn.office.net/support/templates/fr-fr/lt22301254_quantized.png{% endif %}" alt="Card image cap">
         <div class="card-body">
-            <h5 class="card-title">{{ book.title }} par </h5>
+            <h5 class="card-title">{{ book.title }} par {{ book.authorId.firstname }}  {{ book.authorId.lastname }}</h5>
             <p class="card-text">{{ book.description }}</p>
         </div>
         <ul class="list-group list-group-flush">
             <li class="list-group-item">Année: {{ book.year }}</li>
             <li class="list-group-item">ISBN: {{ book.isbn }}</li>
+            <li class="list-group-item">Editeur:<a href="{{ path('publisher_show', {id: book.publisherId.id}) }}" class="link-secondary"> {{ book.publisherId.name }}</a></li>
+            <li class="list-group-item"><a href="{{ path('author_show', {id: book.authorId.id}) }}">Voir l'auteur</a></li>
         </ul>
         {% if is_granted('ROLE_ADMIN') %}
         <div class="card-body">

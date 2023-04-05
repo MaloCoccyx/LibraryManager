@@ -35,6 +35,7 @@
             <th scope="col">ISBN</th>
             <th scope="col">Année</th>
             <th scope="col">Descripion</th>
+            <th scope="col">Editeurs</th>
             <th scope="col">Actions</th>
         </tr>
         </thead>
@@ -43,12 +44,13 @@
             <tr>
                 <td>{{ book.id }}</td>
                 <td>
-                    <img style="max-height: 100px;" src="{% if book.image is not null %}/uploads/photos/authors/{{book.id}}-{{book.title}}/{{ book.image }}{% endif %}" />
+                    <img style="max-height: 100px;" src="{% if book.image is not null %}/uploads/photos/books/{{book.isbn}}-{{book.title}}/{{ book.image }}{% else %}https://binaries.templates.cdn.office.net/support/templates/fr-fr/lt22301254_quantized.png{% endif %}" />
                 </td>
                 <td>{{ book.title }}</td>
                 <td>{{ book.isbn }}</td>
                 <td>{{ book.year }}</td>
                 <td>{{ book.description }}</td>
+                <td><a href="{{  path('author_show', {id: book.publisherId.id}) }}" class="link-info">{{ book.publisherId.name }}</a></td>
                 <td>
                     <a href="{{ path('book_show', {'id': book.id}) }}" class="btn btn-success">Voir</a>
                     {% if is_granted('ROLE_ADMIN') %}

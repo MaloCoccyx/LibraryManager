@@ -34,10 +34,10 @@ class BookType extends AbstractType
             ])
             ->add('author_id', EntityType::class, [
                 'class' => Author::class,
-                'choice_label' => 'firstname',
+                'choice_label' => 'lastname',
                 'label' => 'Auteur',
                 'query_builder' => function(EntityRepository $er) {
-                    return $er->createQueryBuilder('a')->orderBy('a.firstname', 'ASC');
+                    return $er->createQueryBuilder('a')->orderBy('a.lastname', 'ASC');
                 }
             ])
             ->add('publisher_id', EntityType::class, [

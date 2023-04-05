@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Book;
 use App\Form\BookType;
+use App\Repository\AuthorRepository;
 use App\Repository\BookRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -14,7 +15,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class BookController extends AbstractController
 {
     #[Route('/', name: 'book_index', methods: ['GET'])]
-    public function index(BookRepository $bookRepository): Response
+    public function index(BookRepository $bookRepository, AuthorRepository $authorRepository): Response
     {
         return $this->render('book/index.html.twig', [
             'books' => $bookRepository->findAll(),
@@ -33,7 +34,7 @@ class BookController extends AbstractController
             if($photo = $form->get('image')->getData()){
                 $filename = bin2hex(random_bytes(6)) . '.' . $photo->guessExtension();
                 try {
-                    $photo->move($booksPhotoDir . DIRECTORY_SEPARATOR . $book->getId() .'-' . $book->getTitle(), $filename);
+                    $photo->move($booksPhotoDir . DIRECTORY_SEPARATOR . $book->getIsbn() .'-' . $book->getTitle(), $filename);
                 }catch (FileException $e){
 
                 }
@@ -70,7 +71,7 @@ class BookController extends AbstractController
             if($photo = $form->get('image')->getData()){
                 $filename = bin2hex(random_bytes(6)) . '.' . $photo->guessExtension();
                 try {
-                    $photo->move($booksPhotoDir . DIRECTORY_SEPARATOR . $book->getId() .'-' . $book->getTitle(), $filename);
+                    $photo->move($booksPhotoDir . DIRECTORY_SEPARATOR . $book->getIsbn() .'-' . $book->getTitle(), $filename);
                 }catch (FileException $e){
 
                 }
