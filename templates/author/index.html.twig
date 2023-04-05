@@ -2,18 +2,23 @@
 
 {% block title %}Author index{% endblock %}
 
-{% block body %}
-    <h1>Author index</h1>
+{% block stylesheets %}
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.3/css/jquery.dataTables.min.css">
+{% endblock %}
 
-    <table class="table">
+
+{% block body %}
+    <h1>Liste des auteurs</h1>
+
+    <table class="table table-dark table-striped" id="authorsTable">
         <thead>
             <tr>
-                <th>Id</th>
-                <th>Firstname</th>
-                <th>Lastname</th>
-                <th>Sexe</th>
-                <th>Image</th>
-                <th>actions</th>
+                <th scope="col">#</th>
+                <th scope="col">Prénom</th>
+                <th scope="col">Nom</th>
+                <th scope="col">Sexe</th>
+                <th scope="col">Image</th>
+                <th scope="col">Actions</th>
             </tr>
         </thead>
         <tbody>
@@ -25,8 +30,8 @@
                 <td>{{ author.sexe }}</td>
                 <td>{{ author.image }}</td>
                 <td>
-                    <a href="{{ path('app_author_show', {'id': author.id}) }}">show</a>
-                    <a href="{{ path('app_author_edit', {'id': author.id}) }}">edit</a>
+                    <a href="{{ path('author_show', {'id': author.id}) }}" class="btn btn-success">Voir</a>
+                    <a href="{{ path('author_edit', {'id': author.id}) }}" class="btn btn-secondary">Modifier</a>
                 </td>
             </tr>
         {% else %}
@@ -37,5 +42,12 @@
         </tbody>
     </table>
 
-    <a href="{{ path('app_author_new') }}">Create new</a>
+    <a href="{{ path('author_new') }}" class="btn btn-primary">Ajouter un auteur</a>
+{% endblock %}
+{% block javascripts %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.3/jquery.min.js" integrity="sha512-STof4xm1wgkfm7heWqFJVn58Hm3EtS31XFaagaa8VMReCXAkQnJZ+jEy8PCC/iT18dFy95WcExNHFTqLyp72eQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="https://cdn.datatables.net/1.13.3/js/jquery.dataTables.min.js"></script>
+<script>
+    let table = new DataTable('#authorsTable');
+</script>
 {% endblock %}

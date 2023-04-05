@@ -1,38 +1,65 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Author{% endblock %}
+{% block stylesheets %}
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.3/css/jquery.dataTables.min.css">
+{% endblock %}
+
+
+{% block title %}Auteur {{ author.firstname }} {{ author.lastname }}{% endblock %}
 
 {% block body %}
-    <h1>Author</h1>
+    <div class="card" style="width: 18rem;">
+        <img class="card-img-top" src="{% if author.sexe is same as('M') %}https://c7.alamy.com/compfr/2hp6yx7/avatar-homme-visage-silhouette-utilisateur-signe-personne-profil-image-homme-icone-noir-couleur-vecteur-illustration-image-de-style-plat-2hp6yx7.jpg{%  elseif author.sexe is same as ('F') %}https://www.sne.fr/app/uploads/2017/10/profile-femme.jpg{% endif %}" alt="Card image cap">
+        <div class="card-body">
+            <h5 class="card-title">{{ author.firstname }} {{ author.lastname }}</h5>
+            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+        </div>
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item">{% if author.sexe is same as('M') %}Homme{%  elseif author.sexe is same as ('F') %} Femme {% endif %}</li>
+        </ul>
+        <div class="card-body">
+            <a href="{{ path('author_edit', {'id': author.id}) }}" class="card-link">Modifier</a>
+            {{ include('author/_delete_form.html.twig') }}
+        </div>
+    </div>
 
-    <table class="table">
+    <h1>Livres écrit:</h1>
+    <table class="table table-dark table-striped" id="booksTable">
+        <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Titre</th>
+            <th scope="col">ISBN</th>
+            <th scope="col">Année</th>
+            <th scope="col">Descripion</th>
+            <th scope="col">Actions</th>
+        </tr>
+        </thead>
         <tbody>
+        {% for book in author.books %}
             <tr>
-                <th>Id</th>
-                <td>{{ author.id }}</td>
+                <td>{{ book.id }}</td>
+                <td>{{ book.title }}</td>
+                <td>{{ book.isbn }}</td>
+                <td>{{ book.year }}</td>
+                <td>{{ book.description }}</td>
+                <td>
+                    <a href="{{ path('book_show', {'id': book.id}) }}" class="btn btn-success">Voir</a>
+                    <a href="{{ path('book_edit', {'id': book.id}) }}" class="btn btn-secondary">Modifier</a>
+                </td>
             </tr>
+        {% else %}
             <tr>
-                <th>Firstname</th>
-                <td>{{ author.firstname }}</td>
+                <td colspan="6">no records found</td>
             </tr>
-            <tr>
-                <th>Lastname</th>
-                <td>{{ author.lastname }}</td>
-            </tr>
-            <tr>
-                <th>Sexe</th>
-                <td>{{ author.sexe }}</td>
-            </tr>
-            <tr>
-                <th>Image</th>
-                <td>{{ author.image }}</td>
-            </tr>
+        {% endfor %}
         </tbody>
     </table>
-
-    <a href="{{ path('app_author_index') }}">back to list</a>
-
-    <a href="{{ path('app_author_edit', {'id': author.id}) }}">edit</a>
-
-    {{ include('author/_delete_form.html.twig') }}
+{% endblock %}
+{% block javascripts %}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.3/jquery.min.js" integrity="sha512-STof4xm1wgkfm7heWqFJVn58Hm3EtS31XFaagaa8VMReCXAkQnJZ+jEy8PCC/iT18dFy95WcExNHFTqLyp72eQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdn.datatables.net/1.13.3/js/jquery.dataTables.min.js"></script>
+    <script>
+        let table = new DataTable('#booksTable');
+    </script>
 {% endblock %}

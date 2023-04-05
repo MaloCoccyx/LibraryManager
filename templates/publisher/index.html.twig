@@ -1,17 +1,21 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Publisher index{% endblock %}
+{% block title %}Book index{% endblock %}
 
+{% block stylesheets %}
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.3/css/jquery.dataTables.min.css">
+{% endblock %}
 {% block body %}
-    <h1>Publisher index</h1>
+    <h1>Liste des Editeurs</h1>
 
-    <table class="table">
+
+    <table class="table table-dark table-striped" id="publishersTable">
         <thead>
-            <tr>
-                <th>Id</th>
-                <th>Name</th>
-                <th>actions</th>
-            </tr>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Nom</th>
+            <th scope="col">Actions</th>
+        </tr>
         </thead>
         <tbody>
         {% for publisher in publishers %}
@@ -19,17 +23,24 @@
                 <td>{{ publisher.id }}</td>
                 <td>{{ publisher.name }}</td>
                 <td>
-                    <a href="{{ path('app_publisher_show', {'id': publisher.id}) }}">show</a>
-                    <a href="{{ path('app_publisher_edit', {'id': publisher.id}) }}">edit</a>
+                    <a href="{{ path('publisher_show', {'id': publisher.id}) }}" class="btn btn-success">Voir</a>
+                    <a href="{{ path('publisher_edit', {'id': publisher.id}) }}" class="btn btn-secondary">Modifier</a>
                 </td>
             </tr>
         {% else %}
             <tr>
-                <td colspan="3">no records found</td>
+                <td colspan="6">no records found</td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
 
-    <a href="{{ path('app_publisher_new') }}">Create new</a>
+    <a href="{{ path('publisher_new') }}" class="btn btn-primary">Ajouter un livre</a>
+{% endblock %}
+{% block javascripts %}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.3/jquery.min.js" integrity="sha512-STof4xm1wgkfm7heWqFJVn58Hm3EtS31XFaagaa8VMReCXAkQnJZ+jEy8PCC/iT18dFy95WcExNHFTqLyp72eQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdn.datatables.net/1.13.3/js/jquery.dataTables.min.js"></script>
+    <script>
+        let table = new DataTable('#publishersTable');
+    </script>
 {% endblock %}

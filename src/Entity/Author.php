@@ -24,7 +24,7 @@ class Author
     #[ORM\Column(length: 1)]
     private ?string $sexe = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 255, nullable: true)]
     private ?string $image = null;
 
     #[ORM\OneToMany(mappedBy: 'author_id', targetEntity: Book::class, orphanRemoval: true)]

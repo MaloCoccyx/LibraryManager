@@ -1,38 +1,21 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Book{% endblock %}
+{% block title %}Livre - {{ book.title }}{% endblock %}
 
 {% block body %}
-    <h1>Book</h1>
+    <div class="card" style="width: 18rem;">
+        <div class="card-body">
+            <h5 class="card-title">{{ book.title }} par </h5>
+            <p class="card-text">{{ book.description }}</p>
+        </div>
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item">Année: {{ book.year }}</li>
+            <li class="list-group-item">ISBN: {{ book.isbn }}</li>
+        </ul>
+        <div class="card-body">
+            <a href="{{ path('book_edit', {'id': book.id}) }}" class="card-link btn btn-primary">Modifier</a>
+            {{ include('book/_delete_form.html.twig') }}
+        </div>
+    </div>
 
-    <table class="table">
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ book.id }}</td>
-            </tr>
-            <tr>
-                <th>Title</th>
-                <td>{{ book.title }}</td>
-            </tr>
-            <tr>
-                <th>Isbn</th>
-                <td>{{ book.isbn }}</td>
-            </tr>
-            <tr>
-                <th>Year</th>
-                <td>{{ book.year }}</td>
-            </tr>
-            <tr>
-                <th>Description</th>
-                <td>{{ book.description }}</td>
-            </tr>
-        </tbody>
-    </table>
-
-    <a href="{{ path('app_book_index') }}">back to list</a>
-
-    <a href="{{ path('app_book_edit', {'id': book.id}) }}">edit</a>
-
-    {{ include('book/_delete_form.html.twig') }}
 {% endblock %}
